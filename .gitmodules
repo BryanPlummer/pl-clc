@@ -1,0 +1,12 @@
+[submodule "external/faster_rcnn"]
+	path = external/faster_rcnn
+	url = https://github.com/ShaoqingRen/faster_rcnn.git
+[submodule "external/libsvm"]
+	path = external/libsvm
+	url = https://github.com/cjlin1/libsvm
+[submodule "external/edges"]
+	path = external/edges
+	url = https://github.com/pdollar/edges.git
+[submodule "external/toolbox"]
+	path = external/toolbox
+	url = https://github.com/pdollar/toolbox.git
