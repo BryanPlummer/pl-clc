@@ -19,7 +19,7 @@ function imageFeats = getFastRCNNFeatures(imData,net,def)
 
             boxes = single(imageBoxMap(imageKeys{i}));
             im = imageInfo.readImage(find(strcmp(imageKeys{i},imageInfo.imagefns),1));
-            imageFeats{i} = fast_rcnn_im_features(conf,caffe_net,im,boxes,max_rois_num_in_gpu);
+            imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
         end
     else
         imageFeats = cell(imData.nImages,1);
