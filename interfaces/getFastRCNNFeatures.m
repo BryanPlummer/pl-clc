@@ -1,23 +1,38 @@
 function imageFeats = getFastRCNNFeatures(imData,net,def)
 %GETFASTRCNNFEATURES
 %   inputs
-%       imData - an ImageSetData object
+%       imData - an ImageSetData object or a containers.map object with
+%                bounding box data
 %       net - file name including the path of the saved weights for
 %             a network
 %       def - file name including the path of the network definition
 %   outputs
 %       imageFeats - cell array of features for each image in imageInfo
     [caffe_net,fastrcnn_conf,max_rois_num_in_gpu] = fastRCNNInit(net,def);
-    imageFeats = cell(imData.nImages,1);
-    for i = 1:imData.nImages
-        if mod(i,100) == 0
-            fprintf('getFastRCNNFeatures: %i of %i processed\n',i,imData.nImages);
+    if isa(imageBoxMap,'containers.Map')
+        imageKeys = imageBoxMap.keys();
+        imageFeats = cell(length(imageKeys),1);
+        for i = 1:length(imageKeys)
+            if mod(i,100) == 0
+                fprintf('getFastRCNNFeatures: %i of %i processed\n',i,length(imageKeys));
+            end
+
+            boxes = single(imageBoxMap(imageKeys{i}));
+            im = imageInfo.readImage(find(strcmp(imageKeys{i},imageInfo.imagefns),1));
+            imageFeats{i} = fast_rcnn_im_features(conf,caffe_net,im,boxes,max_rois_num_in_gpu);
         end
-        boxes = imData.getBoxes(i);
-        boxes = single(boxes(:,1:4));
-        im = imData.readImage(i);
-        imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
-    end    
+    else
+        imageFeats = cell(imData.nImages,1);
+        for i = 1:imData.nImages
+            if mod(i,100) == 0
+                fprintf('getFastRCNNFeatures: %i of %i processed\n',i,imData.nImages);
+            end
+            boxes = imData.getBoxes(i);
+            boxes = single(boxes(:,1:4));
+            im = imData.readImage(i);
+            imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
+        end    
+    end
     
     caffe.reset_all();
 end

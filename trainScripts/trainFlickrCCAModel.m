@@ -5,7 +5,7 @@ function cca_m = trainFlickrCCAModel()
     phraseList = getPhraseLists(imData,conf.phraseTypes);
     phraseList = subsamplePhraseList(phraseList,conf.ccaMaxSamplesPerPhrase);
     disp('phrase lists complete');
-    textFeats = getHGLMMFeatures(strrep(phraseList.keys(),'+',' '));
+    textFeats = single(getHGLMMFeatures(strrep(phraseList.keys(),'+',' ')));
     disp('hglmm done');
     imageList = organizePhraseListByImage(phraseList);
     imageFeats = getFastRCNNFeatures(imageList,conf.featModel,conf.featDef);
@@ -14,7 +14,6 @@ function cca_m = trainFlickrCCAModel()
     center = true;
     cca_m = CCAModel;
     disp('cca training');
-    textFeats = single(textFeats);
     cca_m.train(textFeats,imageFeats,conf.ccaETA,center);   
 end
 
