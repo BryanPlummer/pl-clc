@@ -1,6 +1,6 @@
 # Phrase Localization and Visual Relationship Detection with Comprehensive Linguistic Cues
 
-**pl-clc** contains the implementation for our paper which has several implementation improvements over the initial arXiv version of the [paper](https://arxiv.org/abs/1611.06641).  If you find this code useful in your research, please consider citing:
+**pl-clc** contains the implementation for our [paper](https://arxiv.org/abs/1611.06641) which has several implementation improvements over the initial arXiv submission.  If you find this code useful in your research, please consider citing:
 
     @article{plummerPLCLC2016,
         Author = {Bryan A. Plummer and Arun Mallya and Christopher M. Cervantes and Julia Hockenmaier and Svetlana Lazebnik},
@@ -27,9 +27,9 @@ This code was tested using Matlab R2016a on a system with Ubuntu 14.04.
     3. [LIBSVM](https://github.com/cjlin1/libsvm)
     4. [HGLMM Fisher Vectors](https://owncloud.cs.tau.ac.il/index.php/s/vb7ys8Xe8J8s8vo)
 
-   On the system this code was tested on only caffe (in Faster RCNN) and LIBSVM required any compiling to use the evaluation script.
+   On the system this code was tested on only Caffe (in Faster RCNN) and LIBSVM required any compiling to use the evaluation script.
 
-3. Optional, download the [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml), putting the code in the `external` folder naming it `stanford-parser`.  Note that the version of the Stanford Parser used was 3.4.1.
+3. Optional, download the [Stanford Parser](http://nlp.stanford.edu/software/lex-parser.shtml), putting the code in the `external` folder naming it `stanford-parser`.  Note that the version of the Stanford Parser used for the precomputed data was 3.4.1.
 
 4. Download the precomputed data (8.3G): [pl-clc models](https://drive.google.com/file/d/0B_PL6p-5reUAcDBiTTV5WUNyYUE/view?usp=sharing)
 
