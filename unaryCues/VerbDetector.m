@@ -78,7 +78,7 @@ classdef VerbDetector < Detector & DataDefinedClasses
             end
 
             outfn = fullfile(conf.dictionarydir,strcat(cue.cueLabel,'.txt'));
-            nClasses = writeRestrictedClasses(classes,conf.minNumInstances,outfn,cue.dictionary.words);
+            nClasses = writeRestrictedClasses(classes,conf.maxNumInstances,outfn,cue.dictionary.words);
             if cue.isCueSubjectRestricted()
                 writeFastRCNNProto(nClasses,conf.subjectVerbProtodir);
             else
