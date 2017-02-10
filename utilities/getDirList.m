@@ -15,7 +15,7 @@ function dirList = getDirList(querydir,flag)
         dirList(strcmp('.',{dirList.name})) = [];
         dirList(strcmp('..',{dirList.name})) = [];
     else
-        dirList = dir(sprintf('%s/*',querydir));
+        dirList = dir(fullfile(querydir,'*'));
         dirList = dirList(~[dirList.isdir]);
     end
     

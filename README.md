@@ -45,6 +45,6 @@ This code was tested using Matlab R2016a on a system with Ubuntu 14.04.
 
 ### Training new models
 
-There are example scripts that was used to create all the precomputed data in the `trainScripts` folder.  Training these models from scratch requires about 100G of RAM.  This can be reduced by simply removing some parfor loops, but training the CCA model requires about 70G RAM by itself.
+There are example scripts that was used to create all the precomputed data in the `trainScripts` folder.  Training these models from scratch requires about 100G of memory.  This can be reduced by simply removing some parfor loops, but training the CCA model requires about 70G memory by itself.
 
 

@@ -16,7 +16,6 @@ function selectedCandidates = refineCandidatesWithPairPhraseCues(conf,imData,ppc
 
     selectedCandidates = cell(imData.nImages,1);
     parfor i = 1:imData.nImages
-        warning('off','all');
         bb = imData.getBoxes(i);
         selectedCandidates{i} = cell(imData.nSentences(i),1);
         for j = 1:imData.nSentences(i)
@@ -47,7 +46,6 @@ function selectedCandidates = refineCandidatesWithPairPhraseCues(conf,imData,ppc
                 assert(length(selectedLabels) == 1);
             end
         end
-        warning('on','all');
     end
 end
 

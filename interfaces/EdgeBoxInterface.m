@@ -42,7 +42,6 @@ classdef EdgeBoxInterface < handle
             boxes(:,3) = boxes(:,1)+boxes(:,3);
             boxes(:,4) = boxes(:,2)+boxes(:,4);
         end
-    end
-    
+    end    
 end
 
