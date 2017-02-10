@@ -1,3 +1,4 @@
+% learns the adjective, subject-verb and verb-object Fast RCNN models
 conf = plClcConfig;
 load(conf.trainData,'imData');
 val = load(conf.valData,'imData');

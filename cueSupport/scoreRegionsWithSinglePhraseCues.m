@@ -1,5 +1,6 @@
 function scores = scoreRegionsWithSinglePhraseCues(conf,imData,weights,cueScores,boxes,addBestCandidate)
-%SCOREREGIONSWITHSINGLEPHRASECUES
+%SCOREREGIONSWITHSINGLEPHRASECUES keeps the top K instances for each phrase 
+%after scoring the regions using all the single phrase cues and mixture weights
 %   inputs
 %       conf - configuration settings (e.g. output of plClcConfig)
 %       imData - an ImageSetData object instance
@@ -20,23 +21,28 @@ function scores = scoreRegionsWithSinglePhraseCues(conf,imData,weights,cueScores
             for k = 1:imData.nPhrases(i,j)
                 box = imData.getPhraseGT(i,j,k);
                 if isempty(box),continue,end
+
                 phraseScores = cueScores{i}{j}{k}*weights;
                 if isempty(boxes)
                     phraseBoxes = [bb,phraseScores];
                 else
                     phraseBoxes = [boxes{i}{j}{k},phraseScores];
                 end
+
                 if addBestCandidate
                     overlap = getIOU(box,phraseBoxes);
                     [~,bestCandidate] = max(overlap);
                 else
                     bestCandidate = [];
                 end
+
                 assert(size(phraseBoxes,2) == 5);
+
                 pick = nms_iou(phraseBoxes,conf.nmsThresh);
                 if ~isempty(bestCandidate)
                     pick(pick == bestCandidate) = [];
                 end
+
                 if length(pick) > conf.maxNumInstances
                     [~,order] = sort(phraseBoxes(pick,end),'ascend');
                     pick = pick(order(1:conf.maxNumInstances));

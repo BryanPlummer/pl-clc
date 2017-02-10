@@ -34,8 +34,6 @@ function [weights,trainLossValue] = trainCueWeights(conf,imData,boxes,scores)
     weights = x(:,weightIdx);
 end
 
-
-
 function acc = accuracyLoss(x,Xtest,Ytest)
     acc = 0;
     for i = 1:length(Xtest)

@@ -1,4 +1,5 @@
 function cca_m = trainFlickrCCAModel()
+%TRAINFLICKRCCAMODEL trains the phrase-region CCA model
     conf = plClcConfig;
     load(conf.trainData,'imData');
     phraseList = getPhraseLists(imData,conf.phraseTypes);

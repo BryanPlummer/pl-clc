@@ -1,3 +1,4 @@
+% trains the phrase location svm model
 conf = plClcConfig;
 groupNames = conf.phraseTypes;
 groupNames(strcmp('notvisual',groupNames)) = [];

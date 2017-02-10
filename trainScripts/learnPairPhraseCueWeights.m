@@ -1,3 +1,4 @@
+% learns the pair phrase cue mixing weights
 conf = plClcConfig;
 load(conf.valData,'imData');
 imData.concatenateGTBoxes();
