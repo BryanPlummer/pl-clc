@@ -7,31 +7,30 @@ function cca_m = trainFlickrCCAModel()
     disp('phrase lists complete');
     textFeats = single(getHGLMMFeatures(strrep(phraseList.keys(),'+',' ')));
     disp('hglmm done');
-    imageList = organizePhraseListByImage(phraseList);
-    imageFeats = getFastRCNNFeatures(imageList,conf.featModel,conf.featDef);
+    imData = organizePhraseListByImage(imData,phraseList);
+    imageFeats = getFastRCNNFeatures(imData,conf.featModel,conf.featDef);
     disp('cca prep');
-    [imageFeats,textFeats] = organizeFeatsForCCA(phraseList,textFeats,imageList,imageFeats);
+    [imageFeats,textFeats] = organizeFeatsForCCA(phraseList,textFeats,imData,imageFeats);
     center = true;
     cca_m = CCAModel;
     disp('cca training');
     cca_m.train(textFeats,imageFeats,conf.ccaETA,center);   
 end
 
-function [imageFeats,textFeats] = organizeFeatsForCCA(phraseList,textFeats,imageList,imageFeats)
+function [imageFeats,textFeats] = organizeFeatsForCCA(phraseList,textFeats,imData,imageFeats)
     textFeatPairIdx = cell(size(textFeats,2),1);
     imageFeatPairs = cell(size(textFeats,2),1);
     phrase = phraseList.keys();
     assert(length(phrase) == size(textFeats,2));
     imFeatDim = size(imageFeats{1},1);
-    imageID = imageList.keys();
     for i = 1:length(phrase)
         instances = phraseList(phrase{i});
         textFeatPairIdx{i} = ones(length(instances),1)*i;
         imageFeatPairs{i} = zeros(imFeatDim,length(instances),'single');
         for j = 1:length(instances)
-            boxes = imageList(instances(j).imageID);
-            imIdx = find(strcmp(instances(j).imageID,imageID),1);
+            imIdx = find(strcmp(instances(j).imageID,imData.imagefns),1);
             assert(length(imIdx) == 1);
+            boxes = imData.getBoxes(imIdx);
             [~,~,boxIdx] = intersect(instances(j).box,boxes,'rows');
             assert(length(boxIdx) == 1);
             imageFeatPairs{i}(:,j) = imageFeats{imIdx}(:,boxIdx);

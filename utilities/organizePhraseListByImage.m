@@ -1,28 +1,32 @@
-function imageList = organizePhraseListByImage(phraseList)
+function imData = organizePhraseListByImage(imData,phraseList)
 %ORGANIZEPHRASELISTBYIMAGE takes the output of getPHraseLists function and
 %reorganizes it by image
 %   inputs
+%       imData - an ImageSetData object
 %       phraseList - containers.Map object where each key is a phrase and
 %                    the values are the imageIDs and boxes associated with
 %                    the phrase
 %   outputs
-%       imageList - containers.Map object where each key is an imageID and
-%                   the values are the bounding boxes associated with that
-%                   image
-    imageList = containers.Map;
+%       imData - an ImageSetData object where its boxes have been
+%                replaced with those from the phrase list
+    imData.boxes = cell(imData.nImages,1);
     phrase = phraseList.keys();
     for i = 1:length(phrase)
         instances = phraseList(phrase{i});
         for j = 1:length(instances)
             imageID = instances(j).imageID;
-            if imageList.isKey(imageID)
-                boxes = imageList(imageID);
-            else
-                boxes = [];
-            end
+            imIdx = find(strcmp(imageID,imData.imagefns),1);
+            assert(~isempty(imIdx));
 
-            imageList(imageID) = unique([boxes;instances(j).box],'rows');
+            imData.boxes{imIdx} = unique([imData.boxes{imIdx};instances(j).box],'rows');
         end
     end
+
+    noBoxes = cellfun(@isempty,imData.boxes);
+    imData.boxes(noBoxes) = [];
+    imData.imagefns(noBoxes) = [];
+    imData.annotations(noBoxes) = [];
+    imData.phrase(noBoxes) = [];
+    imData.relationship(noBoxes) = [];
 end
 

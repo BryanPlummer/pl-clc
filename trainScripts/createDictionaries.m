@@ -15,8 +15,8 @@ detectors = {subjectVerbDet,verbObjectDet,verbPairDet,prepPairDet,clothingBPDet}
 
 load(conf.trainData,'imData');
 createFlickrDetectorDictionaries(conf,imData,detectors);
-adjectives = readClassesFromFile(fullfile('dictionaries','adjectives.txt'));
-modeldir = fullfile('models','adjectives');
+adjectives = readClassesFromFile(fullfile(conf.dictionarydir,'adjectives.txt'));
+modeldir = fullfile(conf.modeldir,'adjectives');
 writeFastRCNNProto(length(adjectives.words),modeldir);
 
 

@@ -9,29 +9,15 @@ function imageFeats = getFastRCNNFeatures(imData,net,def)
 %   outputs
 %       imageFeats - cell array of features for each image in imageInfo
     [caffe_net,fastrcnn_conf,max_rois_num_in_gpu] = fastRCNNInit(net,def);
-    if isa(imData,'containers.Map')
-        imageKeys = imData.keys();
-        imageFeats = cell(length(imageKeys),1);
-        for i = 1:length(imageKeys)
-            if mod(i,100) == 0
-                fprintf('getFastRCNNFeatures: %i of %i processed\n',i,length(imageKeys));
-            end
-
-            boxes = single(imData(imageKeys{i}));
-            im = imData.readImage(find(strcmp(imageKeys{i},imData.imagefns),1));
-            imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
+    imageFeats = cell(imData.nImages,1);
+    for i = 1:imData.nImages
+        if mod(i,100) == 0
+            fprintf('getFastRCNNFeatures: %i of %i processed\n',i,imData.nImages);
         end
-    else
-        imageFeats = cell(imData.nImages,1);
-        for i = 1:imData.nImages
-            if mod(i,100) == 0
-                fprintf('getFastRCNNFeatures: %i of %i processed\n',i,imData.nImages);
-            end
-            boxes = imData.getBoxes(i);
-            boxes = single(boxes(:,1:4));
-            im = imData.readImage(i);
-            imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
-        end    
+        boxes = imData.getBoxes(i);
+        boxes = single(boxes(:,1:4));
+        im = imData.readImage(i);
+        imageFeats{i} = fast_rcnn_im_features(fastrcnn_conf,caffe_net,im,boxes,max_rois_num_in_gpu);
     end
     
     caffe.reset_all();
