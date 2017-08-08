@@ -31,7 +31,7 @@ classdef SinglePhraseCue < Cue
                 labels = cell(length(cue.dictionary.words),1);
                 for i = 1:length(cue.dictionary.words)
                     labels{i} = cue.dictionary.words{i}{1};
-                    if ~isempty(cue.dictionary.types) && isempty(cue.dictionary.types{i})
+                    if ~isempty(cue.dictionary.types) && ~isempty(cue.dictionary.types{i})
                         isSubjectRestricted = cue.isCueSubjectRestricted();
                         if isempty(isSubjectRestricted) || isSubjectRestricted
                             labels{i} = strcat(cue.dictionary.types{i},'_',labels{i});
