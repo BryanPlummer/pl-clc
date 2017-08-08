@@ -1,8 +1,8 @@
-function [weights,trainLossValue] = trainPairCueWeights(imData,conf,spcScores,ppc)
+function [weights,trainLossValue] = trainPairCueWeights(conf,imData,spcScores,ppc)
 %TRAINPAIRCUEWEIGHTS trains a linear weighting of single phrase cues
 %   inputs
-%       imData - an ImageSetData object
 %       conf - configuration settings (e.g. output of plClcConfig)
+%       imData - an ImageSetData object
 %       spcScores - single phrase cue scores for all phrases in the
 %                   sentence
 %       ppc - cell array of the pair phrase cues to learn weights over
@@ -14,7 +14,7 @@ function [weights,trainLossValue] = trainPairCueWeights(imData,conf,spcScores,pp
         ppcScores{i} = ppc{i}.scoreRelationship(imData,spcScores);
     end
 
-    [labels,scores] = getPairScoresForTraining(imData,spcScores,ppc,ppcScores); 
+    [labels,scores] = getPairScoresForTraining(conf,imData,spcScores,ppc,ppcScores); 
     
     % ignore the first two scores as they are the single phrase cue
     % scores for the two phrases in the relationship
@@ -30,9 +30,10 @@ function [weights,trainLossValue] = trainPairCueWeights(imData,conf,spcScores,pp
     weights = x(:,weightIdx);
 end
 
-function [labels,scores] = getPairScoresForTraining(imData,spcScores,ppc,ppcScores)
+function [labels,scores] = getPairScoresForTraining(conf,imData,spcScores,ppc,ppcScores)
 %GETPAIRSCORESFORTRAINING puts the single and pair phrase cue scores into
 %the format used for training the pair score's weights
+%       conf - configuration settings (e.g. output of plClcConfig)
 %       imData - an ImageSetData object
 %       spcScores - single phrase cue scores for all phrases in the
 %                   sentence

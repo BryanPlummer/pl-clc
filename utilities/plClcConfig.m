@@ -71,8 +71,14 @@ function conf = plClcConfig(varargin)
     % file with the weights varaible used to mix the pair phrase cues
     ip.addParamValue('ppcWeights',fullfile('models','learnedWeights','verbPrepClbpPairWeightsDefault.mat'),@ischar);
 
-     % number of iterations used when learning weights for cues
+    % number of iterations used when learning weights for cues
     ip.addParamValue('nLearningIterations',20,@isscalar);
+    
+    % directory to output the subject verb prototxt files for caffe
+    ip.addParamValue('subjectVerbProtodir',fullfile('models','subjectVerb'),@ischar)
+    
+    % directory to output the verb object prototxt files for caffe
+    ip.addParamValue('verbObjectProtodir',fullfile('models','verbObject'),@ischar)
     
     ip.parse(varargin{:});
     conf = ip.Results;

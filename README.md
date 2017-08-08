@@ -1,12 +1,12 @@
-# Phrase Localization and Visual Relationship Detection with Comprehensive Linguistic Cues
+# Phrase Localization and Visual Relationship Detection with Comprehensive Image-Language Cues
 
 **pl-clc** contains the implementation for our [paper](https://arxiv.org/abs/1611.06641) which has several implementation improvements over the initial arXiv submission.  If you find this code useful in your research, please consider citing:
 
-    @article{plummerPLCLC2016,
+    @article{plummerPLCLC2017,
         Author = {Bryan A. Plummer and Arun Mallya and Christopher M. Cervantes and Julia Hockenmaier and Svetlana Lazebnik},
-        Title = {Phrase Localization and Visual Relationship Detection with Comprehensive Linguistic Cues},
-        Journal = {arXiv:1611.06641},
-        Year = {2016}
+        Title = {Phrase Localization and Visual Relationship Detection with Comprehensive Image-Language Cues},
+        Journal = {ICCV},
+        Year = {2017}
     }
 
 
